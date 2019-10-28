@@ -31,6 +31,19 @@
                             </ImageView>
                         </graphic>
                     </Button>
+                    <Button onMouseClicked="#settings" styleClass="settings">
+                        <graphic>
+                            <ImageView>
+                                <Image url="/edu/wpi/grip/ui/icons/settings.png" />
+                                <fitWidth>
+                                    <DPIUtility fx:constant="SMALL_ICON_SIZE" />
+                                </fitWidth>
+                                <fitHeight>
+                                    <DPIUtility fx:constant="SMALL_ICON_SIZE" />
+                                </fitHeight>
+                            </ImageView>
+                        </graphic>
+                    </Button>
                     <Separator orientation="VERTICAL" visible="false">
                         <prefWidth>
                             <DPIUtility fx:constant="MINI_ICON_SIZE" />

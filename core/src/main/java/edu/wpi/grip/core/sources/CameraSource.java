@@ -81,7 +81,7 @@ public class CameraSource extends Source implements RestartableService {
   @SuppressWarnings("PMD.LinguisticNaming")
   private final AtomicBoolean isNewFrame = new AtomicBoolean(false);
   private final Mat currentFrameTransferMat = new Mat();
-  private final AutoRestartingService cameraService;
+  private final AutoRestartingService<GrabberService> cameraService;
   private volatile double frameRate = 0.0;
 
   /**
@@ -211,6 +211,12 @@ public class CameraSource extends Source implements RestartableService {
     final Properties properties = new Properties();
     properties.setProperty(DEVICE_NUMBER_PROPERTY, Integer.toString(deviceNumber));
     return properties;
+  }
+
+  public FrameGrabber getFrameGrabber() {
+   GrabberService gService = cameraService.getDelegate();
+   return gService.getFrameGrabber();
+    //return null;
   }
 
   @Override
@@ -395,7 +401,8 @@ public class CameraSource extends Source implements RestartableService {
       // OpenCV's frame
       // grabber class works fine.
       if (StandardSystemProperty.OS_NAME.value().contains("Windows")) {
-        return new VideoInputFrameGrabber(deviceNumber);
+        return new CSWebcamFrameGrabber(deviceNumber, IP_CAMERA_READ_TIMEOUT,
+              IP_CAMERA_TIMEOUT_UNIT);
       } else {
         return new OpenCVFrameGrabber(deviceNumber);
       }

@@ -123,6 +123,10 @@ public class GrabberService extends AbstractExecutionThreadService {
     return name + " Service";
   }
 
+  public FrameGrabber getFrameGrabber() {
+    return frameGrabber;
+  }
+
   public final class GrabberServiceException extends IOException {
 
     GrabberServiceException(String message, Exception cause) {

@@ -99,7 +99,7 @@ public class AutoRestartingService<S extends Service> implements RestartableServ
    * @return delegate
    */
   @VisibleForTesting
-  protected S getDelegate() {
+  public S getDelegate() {
     return delegate;
   }
 

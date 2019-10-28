@@ -101,6 +101,11 @@ public class SourceController<S extends Source> implements Controller {
     this.eventBus.post(new SourceRemovedEvent(this.getSource()));
   }
 
+  @FXML
+  public void settings() {
+
+  }
+
   public interface BaseSourceControllerFactory<S extends Source> {
     SourceController<S> create(S source);
   }
