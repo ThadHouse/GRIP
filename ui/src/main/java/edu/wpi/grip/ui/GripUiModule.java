@@ -17,7 +17,6 @@ import edu.wpi.grip.ui.pipeline.input.SelectInputSocketController;
 import edu.wpi.grip.ui.pipeline.input.SliderInputSocketController;
 import edu.wpi.grip.ui.pipeline.input.TextFieldInputSocketController;
 import edu.wpi.grip.ui.pipeline.source.CameraSourceController;
-import edu.wpi.grip.ui.pipeline.source.SettingsController;
 import edu.wpi.grip.ui.pipeline.source.ClassifierSourceController;
 import edu.wpi.grip.ui.pipeline.source.HttpSourceController;
 import edu.wpi.grip.ui.pipeline.source.MultiImageFileSourceController;
@@ -79,7 +78,6 @@ public class GripUiModule extends AbstractModule {
     install(new FactoryModuleBuilder().build(HttpSourceController.Factory.class));
     install(new FactoryModuleBuilder().build(ClassifierSourceController.Factory.class));
     install(new FactoryModuleBuilder().build(VideoFileSourceController.Factory.class));
-    install(new FactoryModuleBuilder().build(SettingsController.Factory.class));
     // END Source Factories
 
     // Components
