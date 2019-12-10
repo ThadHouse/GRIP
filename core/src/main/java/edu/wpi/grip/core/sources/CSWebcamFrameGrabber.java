@@ -44,7 +44,7 @@ public class CSWebcamFrameGrabber extends FrameGrabber {
         CameraServerJNI.Helper.setExtractOnStaticLoad(false);
         CameraServerJNI.forceLoad();
       } catch (Throwable t) {
-        throw loadingException = new Exception("Failed to load " + CSCameraFrameGrabber.class, t);
+        throw loadingException = new Exception("Failed to load " + CSWebcamFrameGrabber.class, t);
       }
     }
   }

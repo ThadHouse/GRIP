@@ -3,7 +3,6 @@ package edu.wpi.grip.ui.pipeline.source;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.cscore.VideoProperty;
-import edu.wpi.grip.core.sources.CSCameraFrameGrabber;
 import edu.wpi.grip.core.sources.CSWebcamFrameGrabber;
 import edu.wpi.grip.core.sources.CameraSource;
 import edu.wpi.grip.ui.components.ExceptionWitnessResponderButton;
