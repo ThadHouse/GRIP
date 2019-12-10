@@ -3,7 +3,7 @@ package edu.wpi.grip.ui.pipeline.source;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.cscore.VideoProperty;
-import edu.wpi.grip.core.sources.CSWebcamFrameGrabber;
+import edu.wpi.grip.core.sources.CSUsbCameraFrameGrabber;
 import edu.wpi.grip.core.sources.CameraSource;
 import edu.wpi.grip.ui.components.ExceptionWitnessResponderButton;
 import edu.wpi.grip.ui.components.StartStoppableButton;
@@ -71,21 +71,34 @@ public final class CameraSourceController extends SourceController<CameraSource>
     dialog.initModality(Modality.NONE);
     //dialog.initOwner(primaryStage);
     VBox dialogVbox = new VBox(20);
-    dialogVbox.getChildren().add(new Text("This is a Dialog"));
+
+    dialog.setTitle("Camera Property Setter"); 
 
     FrameGrabber grabber = getSource().getFrameGrabber();
-    if (grabber instanceof CSWebcamFrameGrabber) {
-      CSWebcamFrameGrabber csGrabber = (CSWebcamFrameGrabber)grabber;
+    System.out.println(grabber.getClass().getName());
+    if (grabber instanceof CSUsbCameraFrameGrabber) {
+      CSUsbCameraFrameGrabber csGrabber = (CSUsbCameraFrameGrabber)grabber;
       UsbCamera camera = csGrabber.getCamera();
       VideoMode[] videoModes = camera.enumerateVideoModes();
+      VideoMode currentMode = camera.getVideoMode();
+      VideoModeHolder toSelect = null;
       VideoModeHolder[] fixedModes = new VideoModeHolder[videoModes.length];
       for (int i = 0; i < fixedModes.length; i++) {
         fixedModes[i] = new VideoModeHolder();
         fixedModes[i].videoMode = videoModes[i];
+        VideoMode checkMode = videoModes[i];
+        if (checkMode.pixelFormat.equals(currentMode.pixelFormat) && checkMode.width == currentMode.width
+            && checkMode.height == currentMode.height && checkMode.fps == currentMode.fps) {
+              toSelect = fixedModes[i];
+            }
       }
       ObservableList<VideoModeHolder> modeList = FXCollections.observableArrayList(fixedModes);
       ComboBox<VideoModeHolder> modeComboBox = new ComboBox<>(modeList);
-      modeComboBox.getSelectionModel().selectFirst();
+      if (toSelect != null) {
+        modeComboBox.getSelectionModel().select(toSelect);
+      } else {
+        modeComboBox.getSelectionModel().selectFirst();
+      }
       dialogVbox.getChildren().add(modeComboBox);
       modeComboBox.setOnAction(e -> {
         VideoModeHolder holder = modeComboBox.getSelectionModel().getSelectedItem();
@@ -107,6 +120,7 @@ public final class CameraSourceController extends SourceController<CameraSource>
           Button defaultButton = new Button("Default");
           defaultButton.setOnAction(e -> {
             slider.valueProperty().set(property.getDefault());
+            property.set((int)property.getDefault());
           });
           hbox.getChildren().add(defaultButton);
           hbox.getChildren().add(slider);
